@@ -2,7 +2,7 @@
 
 A GitHub Codespace workshop for writing and deploying [Simplicity](https://github.com/BlockstreamResearch/simplicity) smart contracts on Liquid Testnet.
 
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/stringhandler/simplicity-codespace)
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/blockstream/simplicity-codespace)
 
 ---
 
