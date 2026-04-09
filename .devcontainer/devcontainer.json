@@ -1,0 +1,20 @@
+{
+    "name": "Simplicity Workshop",
+    "build": {
+        "dockerfile": "Dockerfile",
+        "args": {
+            "SIMPLICITYHL_REPO": "https://github.com/BlockstreamResearch/SimplicityHL.git",
+            "HAL_SIMPLICITY_REPO": "https://github.com/BlockstreamResearch/hal-simplicity.git",
+            "LWK_REPO": "https://github.com/Blockstream/lwk.git"
+        }
+    },
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "rust-lang.rust-analyzer",
+                "Blockstream.simplicityhl"
+            ]
+        }
+    },
+    "postCreateCommand": "chmod +x /usr/local/bin/simc || true"
+}

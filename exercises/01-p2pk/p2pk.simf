@@ -1,0 +1,15 @@
+/*
+ * PAY TO PUBLIC KEY
+ *
+ * The coins move if the person with the given public key signs the transaction.
+ *
+ * Alice's public key is the secp256k1 generator point G (1 * G), which
+ * corresponds to private key 0x0000...0001. In a real contract you would
+ * use a real key; these test vectors are well-known and only safe on testnet.
+ *
+ * https://docs.ivylang.org/bitcoin/language/ExampleContracts.html#lockwithpublickey
+ */
+fn main() {
+    let alice: u256 = 0x79be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798;
+    jet::bip_0340_verify((alice, jet::sig_all_hash()), witness::ALICE_SIGNATURE)
+}

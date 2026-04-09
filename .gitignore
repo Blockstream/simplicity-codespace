@@ -1,0 +1,5 @@
+# Local environment — copy from .env.example and fill in your own values
+.env
+
+# Temporary files produced by demo scripts
+/tmp/
