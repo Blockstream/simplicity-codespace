@@ -56,21 +56,6 @@ simc p2ms.simf
 bash demo.sh
 ```
 
----
-
-### [Exercise 03 — Hash Loop](exercises/03-hashloop/)
-
-Demonstrates `for_while` loops and streaming SHA-256 jets. The contract iterates over bytes 0x00–0xFF, hashes them all, and asserts the result matches a known value.
-
-**Concepts:** `for_while`, `Ctx8`, `Either<L, R>`, `jet::sha_256_ctx_8_*`
-
-```bash
-cd exercises/03-hashloop
-simc hashloop.simf
-bash demo.sh
-```
-
----
 
 ## How a Demo Works
 
