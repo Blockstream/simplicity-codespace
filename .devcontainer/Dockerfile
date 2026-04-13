@@ -49,5 +49,10 @@ WORKDIR /opt/lwk
 RUN cargo build --release
 RUN cp target/release/lwk_cli /usr/local/bin/
 
+# ----------------
+# Install simplicity-lsp
+# ----------------
+RUN cargo install simplicityhl-lsp
+
 # Default workspace
 WORKDIR /workspace
