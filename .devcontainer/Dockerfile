@@ -5,7 +5,6 @@ FROM mcr.microsoft.com/devcontainers/base:ubuntu
 # -----------------------------------------------
 ARG SIMPLICITYHL_REPO=https://github.com/BlockstreamResearch/SimplicityHL.git
 ARG HAL_SIMPLICITY_REPO=https://github.com/BlockstreamResearch/hal-simplicity.git
-ARG LWK_REPO=https://github.com/Blockstream/lwk.git
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
@@ -41,13 +40,12 @@ RUN cargo build --release
 RUN cp target/release/hal-simplicity /usr/local/bin/
 
 # ----------------
-# Build lwk
+# Install smplx
 # ----------------
-WORKDIR /opt
-RUN git clone ${LWK_REPO}
-WORKDIR /opt/lwk
-RUN cargo build --release
-RUN cp target/release/lwk_cli /usr/local/bin/
+RUN curl -L https://smplx.simplicity-lang.org | bash && \
+    ~/.simplex/bin/simplexup && \
+    cp ~/.simplex/bin/simplex /usr/local/bin/simplex && \
+    cp ~/.simplex/bin/simplex /usr/local/bin/smplx
 
 # Default workspace
 WORKDIR /workspace
