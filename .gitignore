@@ -3,3 +3,6 @@
 
 # Temporary files produced by demo scripts
 /tmp/
+
+# Work folder is a space for playing around
+work
