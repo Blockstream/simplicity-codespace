@@ -17,9 +17,12 @@ RUN apt-get update && apt-get install -y \
     mcpp \
     && rm -rf /var/lib/apt/lists/*
 
-# Install Rust
-RUN curl https://sh.rustup.rs -sSf | bash -s -- -y
-ENV PATH="/root/.cargo/bin:${PATH}"
+# Install Rust to a system-wide location so all users (incl. vscode) have access
+ENV RUSTUP_HOME=/usr/local/rustup \
+    CARGO_HOME=/usr/local/cargo \
+    PATH=/usr/local/cargo/bin:$PATH
+RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --no-modify-path && \
+    chmod -R a+w /usr/local/rustup /usr/local/cargo
 
 # -------------------------
 # Build simc (SimplicityHL)
@@ -38,6 +41,9 @@ RUN git clone ${HAL_SIMPLICITY_REPO}
 WORKDIR /opt/hal-simplicity
 RUN cargo build --release
 RUN cp target/release/hal-simplicity /usr/local/bin/
+
+# Re-open cargo registry permissions after all builds (root created new cache entries above)
+RUN chmod -R a+w /usr/local/cargo
 
 # ----------------
 # Install smplx
