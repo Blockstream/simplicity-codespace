@@ -22,7 +22,7 @@ ENV RUSTUP_HOME=/usr/local/rustup \
     CARGO_HOME=/usr/local/cargo \
     PATH=/usr/local/cargo/bin:$PATH
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --no-modify-path && \
-    chmod -R a+w /usr/local/rustup /usr/local/cargo
+    chmod -R a+rwX /usr/local/rustup /usr/local/cargo
 
 # -------------------------
 # Build simc (SimplicityHL)
@@ -43,7 +43,7 @@ RUN cargo build --release
 RUN cp target/release/hal-simplicity /usr/local/bin/
 
 # Re-open cargo registry permissions after all builds (root created new cache entries above)
-RUN chmod -R a+w /usr/local/cargo
+RUN chmod -R a+rwX /usr/local/cargo
 
 # ----------------
 # Install smplx
