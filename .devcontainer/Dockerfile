@@ -52,7 +52,8 @@ RUN cp target/release/lwk_cli /usr/local/bin/
 # ----------------
 # Install simplicity-lsp
 # ----------------
-RUN cargo install simplicityhl-lsp
+RUN cargo install simplicityhl-lsp && \
+    cp "$(which simplicityhl-lsp)" /usr/local/bin/
 
 # Default workspace
 WORKDIR /workspace
