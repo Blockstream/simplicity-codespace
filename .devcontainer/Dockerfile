@@ -5,7 +5,6 @@ FROM mcr.microsoft.com/devcontainers/base:ubuntu
 # -----------------------------------------------
 ARG SIMPLICITYHL_REPO=https://github.com/BlockstreamResearch/SimplicityHL.git
 ARG HAL_SIMPLICITY_REPO=https://github.com/BlockstreamResearch/hal-simplicity.git
-ARG LWK_REPO=https://github.com/Blockstream/lwk.git
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
@@ -18,9 +17,12 @@ RUN apt-get update && apt-get install -y \
     mcpp \
     && rm -rf /var/lib/apt/lists/*
 
-# Install Rust
-RUN curl https://sh.rustup.rs -sSf | bash -s -- -y
-ENV PATH="/root/.cargo/bin:${PATH}"
+# Install Rust to a system-wide location so all users (incl. vscode) have access
+ENV RUSTUP_HOME=/usr/local/rustup \
+    CARGO_HOME=/usr/local/cargo \
+    PATH=/usr/local/cargo/bin:$PATH
+RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --no-modify-path && \
+    chmod -R a+rwX /usr/local/rustup /usr/local/cargo
 
 # -------------------------
 # Build simc (SimplicityHL)
@@ -40,14 +42,22 @@ WORKDIR /opt/hal-simplicity
 RUN cargo build --release
 RUN cp target/release/hal-simplicity /usr/local/bin/
 
+# Re-open cargo registry permissions after all builds (root created new cache entries above)
+RUN chmod -R a+rwX /usr/local/cargo
+
 # ----------------
-# Build lwk
+# Install smplx
 # ----------------
-WORKDIR /opt
-RUN git clone ${LWK_REPO}
-WORKDIR /opt/lwk
-RUN cargo build --release
-RUN cp target/release/lwk_cli /usr/local/bin/
+RUN curl -L https://smplx.simplicity-lang.org | bash && \
+    ~/.simplex/bin/simplexup && \
+    cp ~/.simplex/bin/simplex /usr/local/bin/simplex && \
+    cp ~/.simplex/bin/simplex /usr/local/bin/smplx
+
+# ----------------
+# Install simplicity-lsp
+# ----------------
+RUN cargo install simplicityhl-lsp && \
+    cp /root/.cargo/bin/simplicityhl-lsp /usr/local/bin/
 
 # ----------------
 # Install simplicity-lsp
