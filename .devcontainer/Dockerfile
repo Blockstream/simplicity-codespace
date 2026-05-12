@@ -59,5 +59,11 @@ RUN curl -L https://smplx.simplicity-lang.org | bash && \
 RUN cargo install simplicityhl-lsp && \
     cp /root/.cargo/bin/simplicityhl-lsp /usr/local/bin/
 
+# ----------------
+# Install simplicity-lsp
+# ----------------
+RUN cargo install simplicityhl-lsp && \
+    cp "$(which simplicityhl-lsp)" /usr/local/bin/
+
 # Default workspace
 WORKDIR /workspace
