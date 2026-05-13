@@ -50,8 +50,7 @@ RUN chmod -R a+rwX /usr/local/cargo
 # ----------------
 RUN curl -L https://smplx.simplicity-lang.org | bash && \
     ~/.simplex/bin/simplexup && \
-    cp ~/.simplex/bin/simplex /usr/local/bin/simplex && \
-    cp ~/.simplex/bin/simplex /usr/local/bin/smplx
+    cp ~/.simplex/bin/* /usr/local/bin/
 
 # ----------------
 # Install simplicity-lsp
