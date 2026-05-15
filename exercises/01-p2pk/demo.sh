@@ -87,10 +87,10 @@ pause
 # ---------------------------------------------------------------------------
 
 echo "==> Compiling $PROGRAM_SOURCE"
-simc "$PROGRAM_SOURCE"
+simc --json "$PROGRAM_SOURCE" | jq
 pause
 
-COMPILED_PROGRAM=$(simc "$PROGRAM_SOURCE" | sed '1d; 3,$d')
+COMPILED_PROGRAM=$(simc --json "$PROGRAM_SOURCE" | jq -r .program)
 
 echo "==> Getting contract info"
 hal-simplicity simplicity info "$COMPILED_PROGRAM" | jq
@@ -180,10 +180,10 @@ pause
 # ---------------------------------------------------------------------------
 
 echo "==> Recompiling with witness"
-simc "$PROGRAM_SOURCE" -w "$TMPDIR/witness.wit" | tee "$TMPDIR/compiled-with-witness"
+simc --json "$PROGRAM_SOURCE" -w "$TMPDIR/witness.wit" | tee "$TMPDIR/compiled-with-witness.json" | jq
 
-PROGRAM=$(sed '1d; 3,$d' "$TMPDIR/compiled-with-witness")
-WITNESS=$(sed '1,3d; 5,$d' "$TMPDIR/compiled-with-witness")
+PROGRAM=$(cat "$TMPDIR/compiled-with-witness.json" | jq -r .program)
+WITNESS=$(cat "$TMPDIR/compiled-with-witness.json" | jq -r .witness)
 pause
 
 
