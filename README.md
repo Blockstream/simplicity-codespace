@@ -56,6 +56,20 @@ simc p2ms.simf
 bash demo.sh
 ```
 
+---
+
+### [Exercise 03 — Third Time's the Charm](exercises/03-third-time/)
+
+A vault with a state commitment. A single signature approves a transaction, but the state commitment value must be 2 before the withdrawal is permitted. The update transaction is available to increment the state. Thus, if the contract is funded with state equal to 0, three separate transactions in sequence are required in order to withdraw the coins.
+
+**Concepts:** State commitment, state load, state save, covenant pattern
+
+```bash
+cd exercises/03-third-time
+simc third-time.simf
+bash demo.sh
+```
+
 
 ## How a Demo Works
 
