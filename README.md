@@ -62,13 +62,30 @@ bash demo.sh
 
 A vault with a state commitment. A single signature approves a transaction, but the state commitment value must be 2 before the withdrawal is permitted. The update transaction is available to increment the state. Thus, if the contract is funded with state equal to 0, three separate transactions in sequence are required in order to withdraw the coins.
 
-**Concepts:** State commitment, state load, state save, covenant pattern
+**Concepts:** State commitment, state load, state save, multiple contract actions, covenant pattern
 
 ```bash
 cd exercises/03-third-time
 simc third-time.simf
 bash demo.sh
 ```
+
+---
+
+### [Exercise 04 — Hashed Timelock Contract](exercises/04-htlc/)
+
+A hashed timelock contract. This has two branches (complete and timeout). This exercise currently only demonstrates the "complete" branch in which the assets are claimed by revealing a secret password (hash preimage). The HTLC pattern is useful for completing trustless swaps, including between different chains that may even use different technologies.
+
+To redeem this via the "timeout" branch (indicating that the swap was presumed to have failed due to inaction by the counterparty), we would need to build a PSET that asserts the relevant timelock is satisfied, as well as a witness indicating that we're using that branch rather than the "complete" branch.
+
+**Concepts:** Hashing, multiple contract actions, timelocks
+
+```bash
+cd exercises/04-htlc
+simc htlc.simf
+bash demo.sh
+```
+
 
 
 ## How a Demo Works
