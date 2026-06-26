@@ -58,5 +58,18 @@ RUN curl -L https://smplx.simplicity-lang.org | bash && \
 RUN cargo install simplicityhl-lsp && \
     cp /usr/local/cargo/bin/simplicityhl-lsp /usr/local/bin/
 
+# ------------------------------------------------
+# Install tx-manifest-wallet via asdf plugin
+# ------------------------------------------------
+ENV ASDF_DIR=/opt/asdf \
+    ASDF_DATA_DIR=/opt/asdf-data
+RUN git clone https://github.com/asdf-vm/asdf.git ${ASDF_DIR} --branch v0.14.1 && \
+    . ${ASDF_DIR}/asdf.sh && \
+    asdf plugin add tx-manifest-wallet https://github.com/stringhandler/asdf-tx-manifest-wallet.git && \
+    VERSION="$(asdf latest tx-manifest-wallet)" && \
+    asdf install tx-manifest-wallet "$VERSION" && \
+    cp "$(asdf where tx-manifest-wallet "$VERSION")/bin/tx-manifest-wallet" /usr/local/bin/ && \
+    ln -s /usr/local/bin/tx-manifest-wallet /usr/local/bin/txw
+
 # Default workspace
 WORKDIR /workspace
