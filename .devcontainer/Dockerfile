@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/devcontainers/base:ubuntu
+FROM mcr.microsoft.com/devcontainers/base:ubuntu-24.04
 
 # -----------------------------------------------
 # Repo URLs — override via devcontainer.json args
@@ -47,10 +47,17 @@ RUN chmod -R a+rwX /usr/local/cargo
 
 # ----------------
 # Install smplx
+#
+# Installed as the `vscode` user into ~/.simplex/bin, which is the directory
+# simplexup owns and updates. Do NOT copy these binaries into /usr/local/bin:
+# the copies go stale and shadow the ones simplexup installs, which makes
+# `simplexup` warn about duplicate elementsd/electrs/smplx-nextest on PATH.
 # ----------------
+USER vscode
 RUN curl -L https://smplx.simplicity-lang.org | bash && \
-    ~/.simplex/bin/simplexup && \
-    cp ~/.simplex/bin/* /usr/local/bin/
+    /home/vscode/.simplex/bin/simplexup
+USER root
+ENV PATH=/home/vscode/.simplex/bin:$PATH
 
 # ----------------
 # Install simplicity-lsp

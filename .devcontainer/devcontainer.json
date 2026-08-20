@@ -5,8 +5,14 @@
         "args": {
             "SIMPLICITYHL_REPO": "https://github.com/BlockstreamResearch/SimplicityHL.git",
             "HAL_SIMPLICITY_REPO": "https://github.com/BlockstreamResearch/hal-simplicity.git"
-        }
+        },
+        "options": [
+            "--platform=linux/amd64"
+        ]
     },
+    "runArgs": [
+        "--platform=linux/amd64"
+    ],
     "customizations": {
         "vscode": {
             "extensions": [
